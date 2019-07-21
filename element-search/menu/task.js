@@ -1,19 +1,34 @@
-const menuLink = document.getElementsByClassName(" menu__link");
-const menu = document.getElementsByClassName("menu")
-const mainMenu = document.getElementsByClassName("menu_main");
-const menuItem = document.getElementsByClassName("menu__item");
+const menuLinks = [...document.querySelectorAll('.menu__link')],
+            menuItems = document.querySelectorAll('.menu__item');
 
-menuLink.onclick = function() {
-  return false;
-}
+(() => {
 
-let closestMenu = document.closest("li");
-let menuMainItems = document.querySelectorAll("menu menu_main");
+    const menuLinksLength = menuLinks.length;
 
-mainMenu.onclcik = function() {
-  if (closestMenu == true) {
-    menuItem.classList.add("menu_active");
-  }
-}
+    for (let link = 0; link < menuLinksLength; link++) {
 
+        menuLinks[link].addEventListener('click', (e) => {
+    
+            const dropdownMenus = document.querySelectorAll('.menu'),
+                        dropdownMenu = menuItems[link].querySelectorAll('.menu');
+    
+            if (dropdownMenu) {
+                hideDropdownMenus (dropdownMenus);
+                showDropdownMenu (dropdownMenu);
+                e.preventDefault();
+            };  
+        });
+    };
+})(menuLinks);
 
+function hideDropdownMenus (dropdownMenus) {
+    const dropdownMenusLength = dropdownMenus.length;
+
+    for ( let i = 0; i < dropdownMenusLength; i++) {          
+        dropdownMenus[i].classList.remove('menu_active');
+    };
+};
+
+function showDropdownMenu (dropdownMenu) {
+    dropdownMenu[0].classList.add('menu_active'); 
+};
