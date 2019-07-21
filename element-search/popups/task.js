@@ -1,30 +1,41 @@
-const modal_main = document.getElementById("modal_main");
-modal_main.classList.add("modal_active");	
-const success =  document.getElementById("modal_success");
-const successBtn = document.getElementsByClassName("show-success")[0];
+const modalMain = document.getElementById('modal_main');
+const modalSuccess = document.getElementById('modal_success');
+const modalClose = document.getElementsByClassName('modal__close');
+
+(function loadModalOnStart (modalMain) {
+    modalMain.addEventListener('load', showModal(modalMain));
+})(modalMain);
+
+function showModal(modal) {
+    modal.classList.add('modal_active');
+};
+
+function changeModal(modal) {
+    modal.classList.remove('modal_active');
+};
 
 
-function changeWindow() {
-  modal_main.classList.remove("modal_active");
-  success.classList.add("modal_active");
-}
+function closeModal (modalClose, modalMain, modalSuccess) {
+    
+    for (let i = 0; i < modalClose.length; i++) {
 
-successBtn.onclick = changeWindow;
+        modalClose[i].addEventListener('click', function() {
 
-const activeWindow = document.getElementsByClassName("modal_active");
-const arrActive = Array.from(activeWindow);
+            if(modalMain.classList.contains('modal_active')) {
+                changeModal(modalMain);
+            } else {
+                changeModal(modalSuccess);
+            }
+        });
+    };
+};
+closeModal(modalClose, modalMain, modalSuccess);
 
-function closeWindow() {
-  windowСlose.classList.remove("modal_active");
-}
+function showSuccess (modalSuccess) {
+    const successBtn = document.getElementsByClassName('show-success');
 
-const close = document.getElementsByClassName("modal__close");
-let closeItArr = Array.from(close);
-
-for (i = 0; i < arrActive.lenght; i++ ) {
-  let windowСlose = arrActive[i];
-    for (i = 0; i < closeItArr.lenght; i++) {
-      const closeArr = closeItArr(i);
-      closeArr.onclick = closeWindow;
-    }
-}
+    successBtn.item(0).addEventListener('click', function() {
+        showModal(modalSuccess);
+    });
+};
+showSuccess(modalSuccess);
